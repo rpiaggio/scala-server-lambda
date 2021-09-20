@@ -1,3 +1,7 @@
 target
 .idea
+metals.sbt
+.metals/
+.bsp/
+.vscode/
 .hydra

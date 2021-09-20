@@ -1,5 +1,5 @@
-lazy val Scala212Version = "2.12.10"
-lazy val Scala213Version = "2.13.1"
+lazy val Scala212Version = "2.12.13"
+lazy val Scala213Version = "2.13.6"
 
 def scalacVersionOptions(scalaVersion: String) =
   CrossVersion.partialVersion(scalaVersion) match {
@@ -153,7 +153,8 @@ lazy val publishSettings = Seq(
     ScmInfo(
       url("https://github.com/howardjohn/scala-server-lambda"),
       "scm:git@github.com:howardjohn/scala-server-lambda.git"
-    )),
+    )
+  ),
   developers := List(
     Developer(
       id = "howardjohn",
@@ -165,9 +166,7 @@ lazy val publishSettings = Seq(
   credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
   publishMavenStyle := true,
   publishArtifact in Test := false,
-  pomIncludeRepository := { _ =>
-    false
-  },
+  pomIncludeRepository := { _ => false },
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
     if (isSnapshot.value)
