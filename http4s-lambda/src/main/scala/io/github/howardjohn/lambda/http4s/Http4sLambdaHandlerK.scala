@@ -1,11 +1,12 @@
 package io.github.howardjohn.lambda.http4s
 
 import cats.{Applicative, MonadError}
+import cats.implicits._
+import fs2.{Pure, Stream, text}
 import io.github.howardjohn.lambda.{LambdaHandler, ProxyEncoding}
 import io.github.howardjohn.lambda.ProxyEncoding.{ProxyRequest, ProxyResponse}
 import org.http4s._
-import fs2.{Pure, Stream, text}
-import cats.implicits._
+import org.typelevel.ci.CIString
 
 import scala.util.Try
 
@@ -32,8 +33,8 @@ trait Http4sLambdaHandlerK[F[_]] extends LambdaHandler {
       .map { body =>
         ProxyResponse(
           resp.status.code,
-          resp.headers.toList
-            .map(h => h.name.value -> h.value)
+          resp.headers.headers
+            .map(h => h.name.toString -> h.value)
             .toMap,
           body)
       }
@@ -53,7 +54,7 @@ trait Http4sLambdaHandlerK[F[_]] extends LambdaHandler {
   protected def toHeaders(headers: Map[String, String]): Headers =
     Headers {
       headers.map {
-        case (k, v) => Header(k, v)
+        case (k, v) => Header.Raw(CIString(k), v)
       }.toList
     }
 
