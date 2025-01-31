@@ -32,7 +32,7 @@ trait Http4sLambdaHandlerK[F[_]] extends LambdaHandler {
       .map { body =>
         ProxyResponse(
           resp.status.code,
-          resp.headers.toList
+          resp.headers.headers.toList
             .map(h => h.name.value -> h.value)
             .toMap,
           body)

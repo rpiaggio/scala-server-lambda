@@ -3,6 +3,7 @@ package io.github.howardjohn.lambda.http4s
 import cats.effect.IO
 import io.github.howardjohn.lambda.ProxyEncoding._
 import org.http4s._
+import cats.effect.unsafe.implicits.global
 
 class Http4sLambdaHandler(val service: HttpRoutes[IO]) extends Http4sLambdaHandlerK[IO] {
   def handleRequest(request: ProxyRequest): ProxyResponse =
